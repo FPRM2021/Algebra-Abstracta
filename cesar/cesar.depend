@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1535693096 source:c:\users\fabri\documents\universidad\algebra abstracta\cesar\main.cpp
+	"cesar.h"
+
+1535693241 c:\users\fabri\documents\universidad\algebra abstracta\cesar\include\cesar.h
+	<string>
+	<iostream>
+
+1535693260 source:c:\users\fabri\documents\universidad\algebra abstracta\cesar\src\cesar.cpp
+	"cesar.h"
+
