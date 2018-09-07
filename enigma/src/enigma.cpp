@@ -56,16 +56,11 @@ string enigma::cifrado(string msn)
 
         r3=modulo(r3+1);
 
-        if(r3==l3)
+        if(r3==modulo(l3))
             r2=modulo(r2+1);
 
-        if(r2==l2)
+        if(r2==modulo(l2))
             r1=modulo(r1+1);
-
-        if(r1==l1){
-            r2=0;
-            r3=0;
-        }
 
         tmp=rtr3[modulo(r3+alfabeto.find(msn[i]))];
         tmp=rtr2[modulo(r2+alfabeto.find(tmp)-r3)];
@@ -98,16 +93,11 @@ string enigma::descifrado(string msn)
 
         r3=modulo(r3+1);
 
-        if(r3==l3)
+        if(r3==modulo(l3))
             r2=modulo(r2+1);
 
-        if(r2==l2)
+        if(r2==modulo(l2))
             r1=modulo(r1+1);
-
-        if(r1==l1){
-            r2=0;
-            r3=0;
-        }
 
         tmp=rtr3[modulo(r3+alfabeto.find(msn[i]))];
         tmp=rtr2[modulo(r2+alfabeto.find(tmp)-r3)];
