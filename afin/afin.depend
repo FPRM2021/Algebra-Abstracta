@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1537115106 source:c:\users\fabri\documents\universidad\algebra abstracta\afin\main.cpp
+	"afin.h"
+
+1537115106 c:\users\fabri\documents\universidad\algebra abstracta\afin\include\afin.h
+	<string>
+	<iostream>
+	<stdlib.h>
+	<time.h>
+
+1537115278 source:c:\users\fabri\documents\universidad\algebra abstracta\afin\src\afin.cpp
+	"afin.h"
+
