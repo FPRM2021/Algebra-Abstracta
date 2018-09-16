@@ -46,18 +46,23 @@ void enigma::srotor(string &rtr,int cr,int &l){
 string enigma::cifrado(string msn)
 {
     string cypher;
-    string tmp=clave;
-    int p;
+
     int r1=alfabeto.find(clave[0]);
     int r2=alfabeto.find(clave[1]);
     int r3=alfabeto.find(clave[2]);
 
     for(int i=0;i<msn.size();i++){
+        string tmp;
+        int p;
 
         r3=modulo(r3+1);
 
         if(alfabeto[r3]==alfabeto[modulo(l3+1)])
             r2=modulo(r2+1);
+
+        if(alfabeto[r2]==alfabeto[modulo(l2)]){
+            r2=modulo(r2+1);
+        }
 
         if(alfabeto[r3]==alfabeto[modulo(l3+1)] && alfabeto[r2]==alfabeto[modulo(l2+1)])
             r1=modulo(r1+1);
@@ -93,6 +98,9 @@ string enigma::descifrado(string msn)
         r3=modulo(r3+1);
 
         if(alfabeto[r3]==alfabeto[modulo(l3+1)])
+            r2=modulo(r2+1);
+
+        if(alfabeto[r2]==alfabeto[modulo(l2)])
             r2=modulo(r2+1);
 
         if(alfabeto[r3]==alfabeto[modulo(l3+1)] && alfabeto[r2]==alfabeto[modulo(l2+1)])
