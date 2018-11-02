@@ -1,0 +1,97 @@
+# depslib dependency file v1.0
+1540168290 source:c:\users\fabri\documents\universidad\ccomp2\rsabloques\main.cpp
+	"rsa.h"
+	<NTL/ZZ.h>
+	<iostream>
+	<string>
+	<vector>
+
+1540243700 c:\users\fabri\documents\universidad\ccomp2\rsabloques\include\rsa.h
+	"mathfunc.h"
+	<NTL/ZZ.h>
+	<sstream>
+	<string>
+
+1540243894 source:c:\users\fabri\documents\universidad\ccomp2\rsabloques\src\rsa.cpp
+	"rsa.h"
+
+1540243305 c:\users\fabri\documents\universidad\ccomp2\rsabloques\include\mathfunc.h
+	<NTL/ZZ.h>
+
+1540170008 source:c:\users\fabri\documents\universidad\ccomp2\rsabloques\src\mathfunc.cpp
+	"mathfunc.h"
+
+1540168290 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques\main.cpp
+	"rsa.h"
+	<NTL/ZZ.h>
+	<iostream>
+	<string>
+	<vector>
+
+1540243700 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques\include\rsa.h
+	"mathfunc.h"
+	<NTL/ZZ.h>
+	<sstream>
+	<string>
+
+1540243305 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques\include\mathfunc.h
+	<NTL/ZZ.h>
+
+1540247501 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -restochino\main.cpp
+	"rsa.h"
+	<NTL/ZZ.h>
+	<iostream>
+	<string>
+	<vector>
+	"mathfunc.h"
+
+1540247531 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -restochino\include\rsa.h
+	"mathfunc.h"
+	<NTL/ZZ.h>
+	<sstream>
+	<string>
+
+1540244413 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -restochino\include\mathfunc.h
+	<NTL/ZZ.h>
+	<vector>
+
+1540247933 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -restochino\src\rsa.cpp
+	"rsa.h"
+
+1541123110 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\main.cpp
+	"rsa.h"
+	<NTL/ZZ.h>
+	<iostream>
+	<string>
+	<vector>
+	"mathfunc.h"
+	<sstream>
+
+1541122680 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\rsa.h
+	"mathfunc.h"
+	<NTL/ZZ.h>
+	<sstream>
+	<string>
+	<vector>
+
+1541113945 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\mathfunc.h
+	<NTL/ZZ.h>
+	<vector>
+	<sstream>
+	<string>
+
+1541122662 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\rsa.cpp
+	"rsa.h"
+
+1540248217 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\protocolo.cpp
+	"protocolo.h"
+
+1540248217 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\protocolo.h
+
+1540252305 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\firmad.cpp
+	"firmad.h"
+
+1540252353 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\firmad.h
+	"mathfunc.h"
+	<vector>
+
