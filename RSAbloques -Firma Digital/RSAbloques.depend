@@ -58,7 +58,7 @@
 1540247933 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -restochino\src\rsa.cpp
 	"rsa.h"
 
-1541123110 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\main.cpp
+1541312785 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\main.cpp
 	"rsa.h"
 	<NTL/ZZ.h>
 	<iostream>
@@ -67,20 +67,16 @@
 	"mathfunc.h"
 	<sstream>
 
-1541122680 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\rsa.h
+1541311905 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\rsa.h
 	"mathfunc.h"
-	<NTL/ZZ.h>
-	<sstream>
-	<string>
-	<vector>
 
-1541113945 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\mathfunc.h
+1541305241 c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\include\mathfunc.h
 	<NTL/ZZ.h>
 	<vector>
 	<sstream>
 	<string>
 
-1541122662 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\rsa.cpp
+1541313264 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\rsa.cpp
 	"rsa.h"
 
 1540248217 source:c:\users\fabri\documents\universidad\algebra abstracta\rsabloques -firma digital\src\protocolo.cpp

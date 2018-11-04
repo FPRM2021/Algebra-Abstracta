@@ -1,5 +1,4 @@
 #pragma once
-
 #ifndef FMATH_H
 #define FMATH_H
 #include <NTL/ZZ.h>
@@ -114,34 +113,15 @@ inline ZZ expoMBS(ZZ a,vector<int> e,ZZ N, int k){
     return c;
 }
 
-inline ZZ resch(vector<ZZ> a, vector<ZZ> p, ZZ k){
+inline ZZ resch(vector<ZZ> a, vector<ZZ> p){
+    ZZ qInv=euclext(p[1],p[0]);
     ZZ tam=to_ZZ(a.size());
     for(int i=0;i<tam;i++){
         a[i]=Modulo(a[i],p[i]);
     }
-
-    ZZ P=to_ZZ(1);
-    vector<ZZ> Pi;
-    vector<ZZ> qi;
-    for(int i=0;i<tam;i++){
-        if(p[i]<1)
-            return to_ZZ(0);
-        for(int j=0;j<tam;j++){
-                if(mcd(p[i],p[j])!=1 && i!=j)
-                    return to_ZZ(0);
-        }
-        P*=p[i];
-    }
-
-    ZZ x0=to_ZZ(0);
-
-    for(int i=0;i<tam;i++){
-        Pi.push_back(P/p[i]);
-        qi.push_back(Modulo(euclext(Pi[i],p[i]),p[i]));
-        x0+=Modulo(a[i]*Pi[i]*qi[i],P);
-    }
-    x0=Modulo(x0,P);
-    return x0+P*k;
+    ZZ h=Modulo(qInv*Modulo(a[0]-a[1],p[0]),p[0]);
+    ZZ m=a[1]+h*p[1];
+    return m;
 }
 
 inline string zzToString(const ZZ x)
@@ -150,5 +130,14 @@ inline string zzToString(const ZZ x)
     buffer << x;
     return buffer.str();
 }
+
+inline ZZ Stringtozz(string x)
+{
+    stringstream buffer(x);
+    ZZ y;
+    buffer >> y;
+    return y;
+}
+
 
 #endif

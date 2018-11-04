@@ -20,85 +20,57 @@ RSABloques::RSABloques(int bits)
     //Inversa de e
     d=euclext(e, Phi);
     d=Modulo(d, Phi);
+
+    dp=Modulo(d,p-1);
+    dq=Modulo(d,q-1);
 }
 
-//Constructor receptor (Genera claves)
-RSABloques::RSABloques(int bits, ZZ eB, ZZ NB)
-{
-    this->eB=eB;
-    this->NB=NB;
-    GenPrime(p, bits);
-    GenPrime(q, bits);
-
-    while(p==q){
-        GenPrime(p, bits);
-        GenPrime(q, bits);
-    }
-    //Valor de N de 1024 bits
-    N = p * q;
-    //Se halla Phi
-    Phi = (p - ZZ(1)) * (q - ZZ(1));
-    //Genera 1 < e < Phi
-    RandomBnd(e, Phi);
-    while (GCD(e, Phi) != 1 || e == 1)
-        RandomBnd(e, Phi);
-    //Inversa de e
-    d=euclext(e, Phi);
-    d=Modulo(d, Phi);
-}
-
-RSABloques::RSABloques(ZZ e, ZZ p, ZZ q, ZZ eB, ZZ NB){
+RSABloques::RSABloques(ZZ e, ZZ p, ZZ q){
     this->e=e;
     this->p=p;
     this->q=q;
-    this->NB=NB;
-    this->eB=eB;
     N = p * q;
     Phi = (p - ZZ(1)) * (q - ZZ(1));
     d=euclext(e, Phi);
     d=Modulo(d, Phi);
+    dp=Modulo(d,p-1);
+    dq=Modulo(d,q-1);
 }
 
-string RSABloques::toBloques(string msn, int sizN)
+string RSABloques::formatInt(int num, int dig)
 {
-    string res, digAct;
-    string fill = to_string(23);
-    int digsizAlf =to_string(23).length();
-    int k = sizN - 1;
+    string res;
+    res = to_string(num);
+    int difeSize = dig - res.length();
 
-    //string de numeros posicion
-    for (int i = 0; i < msn.length(); i++) {
-        digAct = msn[i];
-        //Format posicion, then add to res
-        res += formatInt(alfabeto.find(digAct), digsizAlf);
-    }
-
-    int ite = Modulo(res.length(), k);
-    //No hace falta relleno
-    if (ite == 0)
-        return res;
-
-    //Relleno con sizAlf
-    ite = k - ite;
-    int i = 0;
-    while (i < ite) {
-        res += fill[Modulo(i, fill.length())];
-        i++;
+    while (difeSize > 0) {
+        res = '0' + res;
+        difeSize--;
     }
     return res;
 }
 
-string RSABloques::toBloquesN(string msn, int sizN)
+string RSABloques::toNumbers(string msn)
 {
-    string fill = to_string(23);
-    int digsizAlf =to_string(23).length();
+    string res, digAct;
+    int digsizAlf =to_string(alfabeto.size()).length();
+    for (int i = 0; i < msn.length(); i++) {
+        digAct = msn[i];
+        res += formatInt(alfabeto.find(digAct), digsizAlf);
+    }
+    return res;
+}
+
+string RSABloques::toBloques(string msn, int sizN)
+{
+    string fill = to_string(22);
     int k = sizN - 1;
-
     int ite = Modulo(msn.length(), k);
-
+    //No hace falta relleno
     if (ite == 0)
         return msn;
 
+    //Relleno con sizAlf
     ite = k - ite;
     int i = 0;
     while (i < ite) {
@@ -122,11 +94,9 @@ string RSABloques::fromBloques(string msn, int sizAlf)
     return res;
 }
 
-string RSABloques::formatInt(int num, int dig)
-{
+string RSABloques::formatZZ(ZZ num, int dig){
     string res;
-    res = to_string(num);
-    //5 dig - 1size = 4 ceros a la izq
+    res += zzToString(num);
     int difeSize = dig - res.length();
 
     while (difeSize > 0) {
@@ -136,71 +106,126 @@ string RSABloques::formatInt(int num, int dig)
     return res;
 }
 
-string RSABloques::formatZZ(ZZ num, int dig)
-{
+string RSABloques::cifrsa(string msn){
+    string resTemp= toBloques(msn, NdigB);
     string res;
-    res += zzToString(num);
-    //5 dig - 1size = 4 ceros a la izq
-    int difeSize = dig - res.length();
+    ZZ opera;
+    int nBloques =resTemp.length()/kB;
+    for (int i = 0; i < nBloques; i++){
+        opera = Stringtozz(resTemp.substr(i * kB, kB));
+        opera = expoMB(opera, eB, NB);
+        res += formatZZ(opera, NdigB);
+    }
+    return res;
+}
 
-    while (difeSize > 0) {
-        res = '0' + res;
-        difeSize--;
+string RSABloques::cifrub(string msn){
+    string rubtmp = toBloques(msn, Ndig);
+    string res;
+    ZZ opera;
+    int nBloques=rubtmp.length()/ k;
+    for (int i = 0; i < nBloques; i++){
+        opera = Stringtozz(rubtmp.substr(i * k, k));
+        ap=expoMB(opera,dp,p);
+        aq=expoMB(opera,dq,q);
+        vector<ZZ>a={ap,aq};
+        vector<ZZ>P={p,q};
+        opera= resch(a,P);
+        res += formatZZ(opera, Ndig);
+    }
+    return res;
+}
+
+string RSABloques::ciffirm(string msn){
+    string fdtmp= toBloques(msn, NdigB);
+    string res;
+    ZZ opera;
+    int nBloques=fdtmp.length()/ kB;
+    for (int i = 0; i < nBloques; i++) {
+        opera = Stringtozz(fdtmp.substr(i * kB, kB));
+        opera = expoMB(opera, eB, NB);
+        res += formatZZ(opera, NdigB);
+    }
+    return res;
+}
+
+string RSABloques::desciffirm(string msn){
+    string res;
+    ZZ opera;
+    int nBloques = msn.length()/Ndig;
+    for (int i = 0; i < nBloques; i++) {
+        opera = Stringtozz(msn.substr(i * Ndig, Ndig));
+        ap=expoMB(opera,dp,p);
+        aq=expoMB(opera,dq,q);
+        vector<ZZ>a={ap,aq};
+        vector<ZZ>P={p,q};
+        opera= resch(a,P);
+        res += formatZZ(opera, k);
+    }
+    return res;
+}
+
+string RSABloques::descifrub(string msn){
+    string res;
+    ZZ opera;
+    int nBloques =msn.length()/NdigB;
+    for (int i = 0; i < nBloques; i++) {
+        opera = Stringtozz(msn.substr(i * NdigB, NdigB));
+        opera = expoMB(opera, eB, NB);
+        res += formatZZ(opera, kB);
+    }
+    return res;
+}
+
+string RSABloques::descifrsa(string msn){
+    string res;
+    ZZ opera;
+    int nBloques = msn.length()/Ndig;
+    for (int i = 0; i < nBloques; i++) {
+        opera = Stringtozz(msn.substr(i * Ndig, Ndig));
+        ap=expoMB(opera,dp,p);
+        aq=expoMB(opera,dq,q);
+        vector<ZZ>a={ap,aq};
+        vector<ZZ>P={p,q};
+        opera= resch(a,P);
+        res += formatZZ(opera, k);
     }
     return res;
 }
 
 string RSABloques::cifrar(string msn)
 {
-    dp=Modulo(d,p-1);
-    dq=Modulo(d,q-1);
+    msn= toNumbers(msn);
+
     string res,rub,fd;
     string resTemp,rubtmp,fdtmp;
 
-    int Ndig = zzToString(N).length();
-    int k = Ndig - 1;
 
-    int NdigB = zzToString(NB).length();
-    int kB = NdigB - 1;
+    Ndig = zzToString(N).length();
+    k = Ndig - 1;
 
-    //Convert msn a numeros para bloque
-
-    ZZ opera;
-
+    NdigB = zzToString(NB).length();
+    kB = NdigB - 1;
 
     //RSA
+    res=cifrsa(msn);
 
-    resTemp = toBloques(msn, NdigB);
-    int nBloques = resTemp.length()/kB;
-    for (int i = 0; i < nBloques; i++){
-        opera = ZZ(stoi(resTemp.substr(i * kB, kB)));
-        opera = expoMB(opera, eB, NB);
-        res += formatZZ(opera, NdigB);
-    }
     //Rubrica
 
-    rubtmp = toBloquesN(res, Ndig);
-    nBloques=rubtmp.length()/ k;
-    for (int i = 0; i < nBloques; i++){
-        opera = ZZ(stoi(rubtmp.substr(i * k, k)));
-        ap=expoMB(opera,dp,p);
-        aq=expoMB(opera,dq,q);
-        vector<ZZ>a={ap,aq};
-        vector<ZZ>P={p,q};
-        opera= resch(a,P,ZZ(0));
-        rub += formatZZ(opera, Ndig);
-    }
-    //FirmaD
+    rub=cifrub(res);
 
+    //FirmaD
+    fd=ciffirm(rub);
+    /*
     fdtmp = toBloquesN(rub, NdigB);
     nBloques=fdtmp.length()/ kB;
     for (int i = 0; i < nBloques; i++) {
-        opera = ZZ(stoi(fdtmp.substr(i * kB, kB)));
+        opera = Stringtozz(fdtmp.substr(i * kB, kB));
         opera = expoMB(opera, eB, NB);
         fd += formatZZ(opera, NdigB);
-    }
+    }*/
+    //return fd;
     return fd;
-    //return res;
 }
 
 string RSABloques::descifrar(string msn)
@@ -208,46 +233,31 @@ string RSABloques::descifrar(string msn)
     string res;
     string resTemp,fdtmp,rubtmp;
 
-    dp=Modulo(d,p-1);
-    dq=Modulo(d,q-1);
 
-    int Ndig = zzToString(N).length();
-    int k = Ndig - 1;
 
-    int NdigB = zzToString(NB).length();
-    int kB = NdigB - 1;
+    Ndig = zzToString(N).length();
+    k = Ndig - 1;
 
-    ZZ opera;
+    NdigB = zzToString(NB).length();
+    kB = NdigB - 1;
 
     //firmadigital
-    int nBloques = msn.length()/Ndig;
-    for (int i = 0; i < nBloques; i++) {
-        opera = ZZ(stoi(msn.substr(i * Ndig, Ndig)));
+    fdtmp=desciffirm(msn);
+    /*ZZ nBloques = ZZ(msn.length()/Ndig);
+    for (ZZ i = ZZ(0); i < nBloques; i++) {
+        opera = Stringtozz(msn.substr(i * Ndig, Ndig));
         ap=expoMB(opera,dp,p);
         aq=expoMB(opera,dq,q);
         vector<ZZ>a={ap,aq};
         vector<ZZ>P={p,q};
-        opera= resch(a,P,ZZ(0));
+        opera= resch(a,P);
         fdtmp += formatZZ(opera, k);
-    }
+    }*/
     //rubrica
-    nBloques =fdtmp.length()/NdigB;
-    for (int i = 0; i < nBloques; i++) {
-        opera = ZZ(stoi(fdtmp.substr(i * NdigB, NdigB)));
-        opera = expoMB(opera, eB, NB);
-        rubtmp += formatZZ(opera, kB);
-    }
+    rubtmp=descifrub(fdtmp);
+
     //rsa
-    nBloques = rubtmp.length()/Ndig;
-    for (int i = 0; i < nBloques; i++) {
-        opera = ZZ(stoi(rubtmp.substr(i * Ndig, Ndig)));
-        ap=expoMB(opera,dp,p);
-        aq=expoMB(opera,dq,q);
-        vector<ZZ>a={ap,aq};
-        vector<ZZ>P={p,q};
-        opera= resch(a,P,ZZ(0));
-        resTemp += formatZZ(opera, k);
-    }
+    resTemp=descifrsa(rubtmp);
 
     //Convertir a mensaje
     res = fromBloques(resTemp, alfabeto.length());
