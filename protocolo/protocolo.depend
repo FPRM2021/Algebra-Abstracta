@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1538004964 source:c:\users\fabri\documents\universidad\algebra abstracta\protocolo\main.cpp
+	<iostream>
+	<afin.h>
+	<cesar.h>
+	<enigma.h>
+	<fstream>
+	<stdlib.h>
+	<string>
+	<protocolo.h>
+
+1537564576 c:\users\fabri\documents\universidad\algebra abstracta\protocolo\include\afin.h
+	<stdlib.h>
+	<time.h>
+	<string>
+
+1537553633 c:\users\fabri\documents\universidad\algebra abstracta\protocolo\include\math.h
+
+1537633210 c:\users\fabri\documents\universidad\algebra abstracta\protocolo\include\cesar.h
+	<string>
+	<stdlib.h>
+	<time.h>
+	<iostream>
+
+1537917130 c:\users\fabri\documents\universidad\algebra abstracta\protocolo\include\enigma.h
+	<string>
+	<iostream>
+
+1537564778 source:c:\users\fabri\documents\universidad\algebra abstracta\protocolo\src\afin.cpp
+	"afin.h"
+
+1537633210 source:c:\users\fabri\documents\universidad\algebra abstracta\protocolo\src\cesar.cpp
+	"cesar.h"
+
+1537990677 source:c:\users\fabri\documents\universidad\algebra abstracta\protocolo\src\enigma.cpp
+	"enigma.h"
+
+1537920057 source:c:\users\fabri\documents\universidad\algebra abstracta\protocolo\src\protocolo.cpp
+	"protocolo.h"
+
+1537917091 c:\users\fabri\documents\universidad\algebra abstracta\protocolo\include\protocolo.h
+	<iostream>
+	<afin.h>
+	<cesar.h>
+	<enigma.h>
+	<fstream>
+	<stdlib.h>
+	<string>
+
